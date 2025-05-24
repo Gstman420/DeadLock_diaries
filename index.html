@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Deadlock Diaries - Dining Philosophers Problem</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">The Deadlock Diaries</div>
+            <ul class="nav-links">
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#problem">The Problem</a></li>
+                <li><a href="#solutions">Solutions</a></li>
+                <li><a href="#simulation">Simulation</a></li>
+                <li><a href="#code">Code Examples</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="overview" class="hero">
+            <div class="overview-bubbles">
+                <div class="overview-bubble"></div>
+                <div class="overview-bubble"></div>
+                <div class="overview-bubble"></div>
+                <div class="overview-bubble"></div>
+                <div class="overview-bubble"></div>
+            </div>
+            <div class="bubble-container">
+                <div class="bubble">The</div>
+                <div class="bubble">Deadlock</div>
+                <div class="bubble">Diaries</div>
+            </div>
+            <h1>Dining Philosophers Problem</h1>
+            <p>A classic synchronization problem in operating systems</p>
+        </section>
+
+        <section id="problem" class="problem">
+            <h2>The Problem</h2>
+            <div class="content">
+                <div class="text-content">
+                    <p>The Dining Philosophers problem was formulated by Edsger Dijkstra in 1965. It illustrates the challenges of resource allocation and deadlock prevention in concurrent systems.</p>
+                    <h3>Scenario:</h3>
+                    <ul class="problem-list">
+                        <li>Five philosophers sit around a circular table</li>
+                        <li>Each philosopher has a bowl of rice</li>
+                        <li>There are five chopsticks placed between the philosophers</li>
+                        <li>Philosophers alternate between thinking and eating</li>
+                        <li>To eat, a philosopher needs two chopsticks</li>
+                    </ul>
+                </div>
+                <div class="visual-content">
+                    <div id="table-visualization">
+                        <!-- This will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solutions" class="solutions">
+            <h2>Possible Solutions</h2>
+            <div class="solution-cards">
+                <div class="solution-card">
+                    <h3>Resource Hierarchy Solution</h3>
+                    <p>Assign a global order to the resources (chopsticks) and require that they be requested in that order.</p>
+                </div>
+                <div class="solution-card">
+                    <h3>Arbitrator Solution</h3>
+                    <p>Introduce a waiter who controls access to the chopsticks, ensuring that at least one philosopher can eat.</p>
+                </div>
+                <div class="solution-card">
+                    <h3>Chandy/Misra Solution</h3>
+                    <p>A more complex solution that allows for arbitrary resource requests and handles deadlock prevention.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="simulation" class="simulation">
+            <h2>Interactive Simulation</h2>
+            <div class="simulation-container">
+                <div class="simulation-content">
+                    <div class="simulation-left">
+                        <div id="simulation-visualization">
+                            <div class="outer-circle">
+                                <div class="arrow"></div>
+                            </div>
+                            <!-- Canvas will be added here by JavaScript -->
+                        </div>
+                        <div class="controls">
+                            <button id="start-sim">Start Simulation</button>
+                            <button id="pause-sim">Pause</button>
+                            <button id="reset-sim">Reset</button>
+                        </div>
+                        <div class="strategy-info">
+                            <h3>Chopstick Pickup Strategy</h3>
+                            <p>To avoid deadlock in the Dining Philosophers Problem, an asymmetric strategy is used:</p>
+                            <div class="strategy-details">
+                                <div class="strategy-item">
+                                    <span class="strategy-icon">✅</span>
+                                    <div class="strategy-text">
+                                        <strong>Even-numbered philosophers:</strong>
+                                        <p>Pick up left chopstick first, then the right</p>
+                                    </div>
+                                </div>
+                                <div class="strategy-item">
+                                    <span class="strategy-icon">✅</span>
+                                    <div class="strategy-text">
+                                        <strong>Odd-numbered philosophers:</strong>
+                                        <p>Pick up right chopstick first, then the left</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="simulation-explanation">
+                        <h3>What's Happening?</h3>
+                        <div class="explanation-content">
+                            <div class="state-explanation">
+                                <h4>Current States:</h4>
+                                <ul id="state-list">
+                                    <!-- Will be populated by JavaScript -->
+                                </ul>
+                            </div>
+                            <div class="legend">
+                                <h4>Color Legend:</h4>
+                                <div class="legend-item">
+                                    <span class="color-box thinking"></span>
+                                    <span>Thinking</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="color-box hungry"></span>
+                                    <span>Hungry</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="color-box eating"></span>
+                                    <span>Eating</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="color-box chopstick-available"></span>
+                                    <span>Chopstick</span>
+                                </div>
+                            </div>
+                            <div class="simulation-tips">
+                                <h4>Tips:</h4>
+                                <ul class="tips-list">
+                                    <li>Watch how philosophers alternate between thinking and eating</li>
+                                    <li>Notice how chopsticks are shared between adjacent philosophers</li>
+                                    <li>Observe the synchronization of actions</li>
+                                    <li>Look for potential deadlock situations</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="code" class="code-examples">
+            <h2>Code Examples</h2>
+            <div class="code-tabs">
+                <div class="tab">
+                    <h3>C Implementation</h3>
+                    <pre><code>
+#include &lt;stdio.h&gt;
+#include &lt;pthread.h&gt;
+#include &lt;unistd.h&gt;
+
+#define N 5  // Number of philosophers
+#define LEFT (i + N - 1) % N
+#define RIGHT (i + 1) % N
+
+pthread_mutex_t chopsticks[N];      // Mutexes for chopsticks
+pthread_t philosophers[N];          // Threads for philosophers
+
+void *philosopher(void *arg) {
+    int i = *(int *)arg;
+
+    while (1) {
+        // Thinking
+        printf("Philosopher %d is thinking\n", i);
+        sleep(2);
+
+        // Asymmetric solution to avoid deadlock
+        if (i % 2 == 0) {
+            pthread_mutex_lock(&chopsticks[LEFT]);
+            pthread_mutex_lock(&chopsticks[RIGHT]);
+        } else {
+            pthread_mutex_lock(&chopsticks[RIGHT]);
+            pthread_mutex_lock(&chopsticks[LEFT]);
+        }
+
+        // Eating
+        printf("Philosopher %d is eating\n", i);
+        sleep(1);
+
+        // Put down chopsticks
+        pthread_mutex_unlock(&chopsticks[LEFT]);
+        pthread_mutex_unlock(&chopsticks[RIGHT]);
+    }
+}
+
+int main() {
+    int i;
+    int ids[N];
+
+    // Initialize chopsticks (mutexes)
+    for (i = 0; i < N; i++) {
+        pthread_mutex_init(&chopsticks[i], NULL);
+    }
+
+    // Create philosopher threads
+    for (i = 0; i < N; i++) {
+        ids[i] = i;
+        pthread_create(&philosophers[i], NULL, philosopher, &ids[i]);
+    }
+
+    // Wait for all threads (optional in this infinite loop example)
+    for (i = 0; i < N; i++) {
+        pthread_join(philosophers[i], NULL);
+    }
+
+    return 0;
+}</code></pre>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Dining Philosophers Problem. Educational Resource.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 
